@@ -15,7 +15,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;4、在option vlan2_bridgeap下添加option vlan\*\_bridgeap，值为"5"。例：option vlan\*\_bridgeap '5'  
 &nbsp;&nbsp;&nbsp;&nbsp;5、若想将端口用于第二wan口，建议将config misc sw\_reg里的option sw\_lan\_ports与option sw\_wan\_port按实际用途更改 (此处可提交issues改进)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+</p>
+>>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85
 =======
 </p>
 >>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85

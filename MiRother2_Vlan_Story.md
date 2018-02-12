@@ -28,6 +28,7 @@ config switch_vlan 'eth0_2'
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '1'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '0 2 5*'
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 >config switch_vlan 'eth0_2'  
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
@@ -36,6 +37,8 @@ config switch_vlan 'eth0_2'
 
 >config switch_vlan 'eth0_3'  
 =======
+=======
+>>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85
 </p>
 config switch_vlan 'eth0_2'  
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
@@ -43,14 +46,22 @@ config switch_vlan 'eth0_2'
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '4 5'  
 </p>
 config switch_vlan 'eth0_3'  
+<<<<<<< HEAD
+>>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85
+=======
 >>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '3'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '3 5'  
 ...
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 >...  
+=======
+</p>
+...  
+>>>>>>> 42aefeb646ef97a1551be45e0b0bcacd5efdba85
 =======
 </p>
 ...  
