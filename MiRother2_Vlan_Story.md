@@ -16,7 +16,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '1'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '0 2 3 5*'
-
+>  
 >config switch_vlan 'eth0_2'  
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '2'  
@@ -27,18 +27,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '1'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '0 2 5*'
-
+>  
 >config switch_vlan 'eth0_2'  
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '2'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '4 5'  
-
+>  
 >config switch_vlan 'eth0_3'  
 &nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
 &nbsp;&nbsp;&nbsp;&nbsp;option vlan '3'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ports '3 5'  
 ...
-
+>  
 >...  
 config interface 'link'  
 &nbsp;&nbsp;&nbsp;&nbsp;option ifname 'eth0.3'  
