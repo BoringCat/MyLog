@@ -18,7 +18,7 @@
 >nvram  
 输入nvram show 2>/dev/null | grep vlan后输出整理如下  
 &nbsp;&nbsp;&nbsp;&nbsp;vlan1hwname=et0  
-&nbsp;&nbsp;&nbsp;&nbsp;vlan1ports=0 2 5\*  
+&nbsp;&nbsp;&nbsp;&nbsp;vlan1ports=0 2 3 5\*  
 &nbsp;&nbsp;&nbsp;&nbsp;vlan2hwname=et0  
 &nbsp;&nbsp;&nbsp;&nbsp;vlan2ports=4 5  
 &nbsp;&nbsp;&nbsp;&nbsp;lan\_vlan\_id=1  
@@ -34,4 +34,4 @@
 
 ### 小米路由器R2D switch端口与物理端口对应
 **注：“Lan”与“Wan”均为出厂默认，数字为对应端口号**  
-![MiRother2-switch](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/MiRother2-switch.png)
+![MiRother2-switch](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/MiRother/MiRother2-switch.png)
