@@ -98,7 +98,7 @@ lan\_ifnames=vlan1 wl0 wl1
 landevs=vlan1 wl0 wl1  
 wl0_vlan\_prio\_mode=off  
 wl1_vlan\_prio\_mode=off  
-
+>  
 >发现总有一行 size: 20153 bytes (45383 left) 混迹其中，严重影响阅读。  
 于是将输入改成 `nvram show 2>/dev/null | grep vlan`
 
