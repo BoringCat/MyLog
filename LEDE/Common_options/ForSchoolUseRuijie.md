@@ -1,11 +1,12 @@
 ## 在路由器上跑MentoHUST
 **备忘录**  
 #### 编译与安装
-1. 在Git上拉[MentoHUST-OpenWrt-ipk](https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk)代码(原文)  
-> pushd package  
-git clone https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git  
+1. 在Git上拉[MentoHUST-OpenWrt-ipk](https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk)代码 (原文)  
+```
+pushd package
+git clone https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git
 popd
-
+```
 2. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<m>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
 
 3. (可与4二选一) 输入`make package/MentoHUST-OpenWrt-ipk/compile V=s`编译mentohust包。若没有错误就可以在"bin/_$Arch_/packages/base"里面找到mentohust的ipk包(嫌麻烦可以直接`find -type f -name "mentohust*.ipk"`)
@@ -55,13 +56,15 @@ DhcpScript 是 进行DHCP的脚本
 由于这个版本的MentoHust并没有init.d脚本，所以..............无法实现原生开机自启。只能写在rc.local中  
 在rc.local中直接添加`mentohust`后又发现，经常无法自启。查原因发现是由于网卡未初始化mentohust就以及开始进行认证...................  
 于是修改开机脚本为先判断指定网卡是否有IP地址(通过ip或ip-full包)  
-网卡以eth0为例
->`/etc/rc.local`  
->...  
->while [ "$(ip a sh eth0 | grep inet | grep -v inet6)" == "" ]  
-do  
-sleep 1  
-done  
-mentohust  
->...  
->exit 0
+网卡以eth0为例  
+`/etc/rc.local`  
+```
+...
+while [ "$(ip a sh eth0 | grep inet | grep -v inet6)" == "" ]
+do
+sleep 1
+done
+mentohust
+...
+exit 0
+```

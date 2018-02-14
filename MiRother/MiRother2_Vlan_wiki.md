@@ -1,7 +1,7 @@
 ## 如何更改小米路由器R2D的VLAN配置
 **本文所有终端文本编辑器均为vim，若不熟悉vim可用nano代替**
 1. **基础配置**  
->vim /etc/config/network  
+>**vim /etc/config/network**  
 &nbsp;&nbsp;&nbsp;&nbsp;1、从switch_vlan 'eth0_1'中去除你想用的端口并记住端口号 (具体端口号文末给出)  
 &nbsp;&nbsp;&nbsp;&nbsp;2、在config interface 'loopback'前添加一个switch\_vlan的配置，其中option vlan的值不能与前两个重复。建议配置按照规范命名  
 &nbsp;&nbsp;&nbsp;&nbsp;3、在文件末尾添加interface配置，命名不能与前面三个配置相同，其中option ifname为eth0._"option vlan的值"_，其余配置均可在[OpenWrt Wiki - Network configuration](https://wiki.openwrt.org/doc/uci/network)中查询
@@ -17,20 +17,22 @@
 >
 >nvram  
 输入nvram show 2>/dev/null | grep vlan后输出整理如下  
-&nbsp;&nbsp;&nbsp;&nbsp;vlan1hwname=et0  
-&nbsp;&nbsp;&nbsp;&nbsp;vlan1ports=0 2 3 5\*  
-&nbsp;&nbsp;&nbsp;&nbsp;vlan2hwname=et0  
-&nbsp;&nbsp;&nbsp;&nbsp;vlan2ports=4 5  
-&nbsp;&nbsp;&nbsp;&nbsp;lan\_vlan\_id=1  
-&nbsp;&nbsp;&nbsp;&nbsp;br0\_ifnames=vlan1 wl0 wl1  
-&nbsp;&nbsp;&nbsp;&nbsp;lan\_ifnames=vlan1 wl0 wl1   
-&nbsp;&nbsp;&nbsp;&nbsp;landevs=vlan1 wl0 wl1  
-&nbsp;&nbsp;&nbsp;&nbsp;wl0_vlan\_prio\_mode=off  
-&nbsp;&nbsp;&nbsp;&nbsp;wl1_vlan\_prio\_mode=off  
+>```
+>vlan1hwname=et0  
+>vlan1ports=0 2 3 5\*  
+>vlan2hwname=et0  
+>vlan2ports=4 5  
+>lan\_vlan\_id=1  
+>br0\_ifnames=vlan1 wl0 wl1  
+>lan\_ifnames=vlan1 wl0 wl1   
+>landevs=vlan1 wl0 wl1  
+>wl0_vlan\_prio\_mode=off  
+>wl1_vlan\_prio\_mode=off  
+>```
 需要将"基础配置中设定的VLAN值"加入nvram中  
-1、输入 nvram set vlan\*hwname=et0  
-2、输入 nvram set vlan\*ports='_(你想用的端口)_ 5'  
-3、输入 nvram commit 保存配置
+1、输入 `nvram set vlan*hwname=et0`  
+2、输入 `nvram set vlan*ports='$(你想用的端口) 5'`  
+3、输入 `nvram commit` 保存配置
 
 ### 小米路由器R2D switch端口与物理端口对应
 **注：“Lan”与“Wan”均为出厂默认，数字为对应端口号**  

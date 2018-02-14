@@ -11,41 +11,43 @@ ps:神TM小米路由器SSH设置静态路由重启失效
 ### 第一次尝试
 **小米路由器的LUCI是魔改的！不能改switch配置！**  
 根据 Openwrt wiki 以及个人知识储备，我开始修改配置文件
->`vim /etc/config/network`  
+>`/etc/config/network`  
 
 将  
+>``` config
 >config switch_vlan 'eth0_1'  
-&nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan '1'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ports '0 2 3 5*'
+>option device 'eth0'  
+>option vlan '1'  
+>option ports '0 2 3 5*'
 >
 >config switch_vlan 'eth0_2'  
-&nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan '2'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ports '4 5'  
-
+>option device 'eth0'  
+>option vlan '2'  
+>option ports '4 5'  
+>```
 改成了  
+>```
 >config switch_vlan 'eth0_1'  
-&nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan '1'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ports '0 2 5*'
+>option device 'eth0'  
+>option vlan '1'  
+>option ports '0 2 5*'
 >
 >config switch_vlan 'eth0_2'  
-&nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan '2'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ports '4 5'  
+>option device 'eth0'  
+>option vlan '2'  
+>option ports '4 5'  
 >
 >config switch_vlan 'eth0_3'  
-&nbsp;&nbsp;&nbsp;&nbsp;option device 'eth0'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan '3'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ports '3 5'  
-...
+>option device 'eth0'  
+>option vlan '3'  
+>option ports '3 5'  
+>...
 >
 >...  
-config interface 'link'  
-&nbsp;&nbsp;&nbsp;&nbsp;option ifname 'eth0.3'  
-&nbsp;&nbsp;&nbsp;&nbsp;option proto 'dhcp'  
-
+>config interface 'link'  
+>option ifname 'eth0.3'  
+>option proto 'dhcp'  
+>```
 然后信心满满的输入 `/etc/init.d/network restart`  
 接着把自己电脑的网线接到三号口，输入`dmesg`看到
 >robo_link_down: applying EEE WAR for 53125 port 3 link-up
@@ -59,27 +61,29 @@ emmmmmmmmmmmmmmmmm，Tplink的DHCP包跑了过来(｀･д･´) 。
 Baidu到小米路由器是用了闭源驱动的，改了`/etc/config/network`只是在系统里生效而已，下面硬件还是像以前那样工作。还需要更改`/etc/config/misc`。  
 于是我打开了`misc`，搜索vlan关键字，找到了一个比较相似的地方
 >`/etc/config/misc`  
+>```
 >config misc ports  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan1 '0 2 3 5\*'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan2 '4 5'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan1\_bridgeap '0 2 3 4 5\*'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan2\_bridgeap '5'  
-~~_(老哥你tab/空格并用啊)_~~
+>option vlan1 '0 2 3 5\*'  
+>option vlan2 '4 5'  
+>option vlan1\_bridgeap '0 2 3 4 5\*'  
+>option vlan2\_bridgeap '5'  
+>```
+>~~_(老哥你tab/空格并用啊)_~~
 
 把这段改成
-
+>```
 >config misc ports  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan1 '0 2 5\*'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan2 '4 5'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan3 '3 5'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan1\_bridgeap '0 2 4 5\*'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan2\_bridgeap '5'  
-&nbsp;&nbsp;&nbsp;&nbsp;option vlan3\_bridgeap '3 5'  
-
+>option vlan1 '0 2 5\*'  
+>option vlan2 '4 5'  
+>option vlan3 '3 5'  
+>option vlan1\_bridgeap '0 2 4 5\*'  
+>option vlan2\_bridgeap '5'  
+>option vlan3\_bridgeap '3 5'  
+>```
 然后保存，reboot！  
 .......................怎么........还是一样？？？？？？ (°ー°〃)  
 想了想没道理啊，eth0.3出来了，`ifup link` 也生效。为什么还是在同一广播域下  
-\(＠\_＠;\)  
+（＠\_＠;）  
 第二次失败！
 ***
 ### 第三次尝试
@@ -87,38 +91,47 @@ Baidu到小米路由器是用了闭源驱动的，改了`/etc/config/network`只
 接着开始尝试修改nvram里面的内容，发现命令就是`nvram`
 > **输出nvram中有关vlan的配置**  
 `nvram show | grep vlan`
->> vlan1hwname=et0  
-size: 20153 bytes (45383 left)  
-vlan1ports=0 2 3 5\*  
-vlan2hwname=et0  
-vlan2ports=4 5  
-lan\_vlan\_id=1  
-br0\_ifnames=vlan1 wl0 wl1  
-lan\_ifnames=vlan1 wl0 wl1   
-landevs=vlan1 wl0 wl1  
-wl0_vlan\_prio\_mode=off  
-wl1_vlan\_prio\_mode=off  
->  
+>```
+>vlan1hwname=et0  
+>size: 20153 bytes (45383 left)  
+>vlan1ports=0 2 3 5\*  
+>vlan2hwname=et0  
+>vlan2ports=4 5  
+>lan\_vlan\_id=1  
+>br0\_ifnames=vlan1 wl0 wl1  
+>lan\_ifnames=vlan1 wl0 wl1   
+>landevs=vlan1 wl0 wl1  
+>wl0_vlan\_prio\_mode=off  
+>wl1_vlan\_prio\_mode=off  
+>```
+
 >发现总有一行 size: 20153 bytes (45383 left) 混迹其中，严重影响阅读。  
 于是将输入改成 `nvram show 2>/dev/null | grep vlan`
 
 事实上nvram的输出并没有这么工整，稍加整理后发现规律
+>```
 >vlan1hwname=et0  
-vlan1ports=0 2 3 5\*  
-vlan2hwname=et0  
-vlan2ports=4 5  
-
+>vlan1ports=0 2 3 5\*  
+>vlan2hwname=et0  
+>vlan2ports=4 5  
+>```
 添加vlan3的配置便可  
 在记事本上修改后如下
+>```
 >vlan1hwname=et0  
-vlan1ports=0 2 5\*  
-vlan2hwname=et0  
-vlan2ports=4 5  
-vlan3hwname=et0  
-vlan3ports=3 5  
+>vlan1ports=0 2 5\*  
+>vlan2hwname=et0  
+>vlan2ports=4 5  
+>vlan3hwname=et0  
+>vlan3ports=3 5  
+>```
+输入命令
+```
+nvram set vlan3hwname=et0
+nvram set vlan3ports='3 5'
+```
+然后保存 `nvram commit`  
 
-输入命令`nvram set vlan3hwname=et0` &nbsp;&nbsp; `nvram set vlan3ports='3 5'`  
-然后保存`nvram commit`  
 我并不清楚nvram的配置是不是立即生效，我还是重启了一次路由器。
 接着我电脑拿不到IP地址了，修改应该是生效了。
 ***

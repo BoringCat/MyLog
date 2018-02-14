@@ -6,11 +6,12 @@
 [shadowsocks/openwrt-shadowsocks](https://github.com/shadowsocks/openwrt-shadowsocks)  
 [shadowsocks/luci-app-shadowsocks](https://github.com/shadowsocks/luci-app-shadowsocks)  
 (可选)[aa65535/openwrt-simple-obfs](https://github.com/aa65535/openwrt-simple-obfs)  
-> git clone https://github.com/shadowsocks/openwrt-feeds.git package/feeds  
-git clone https://github.com/shadowsocks/openwrt-shadowsocks.git package/shadowsocks-libev  
-git clone https://github.com/shadowsocks/luci-app-shadowsocks.git package/luci-app-shadowsocks  
+``` shell
+git clone https://github.com/shadowsocks/openwrt-feeds.git package/feeds
+git clone https://github.com/shadowsocks/openwrt-shadowsocks.git package/shadowsocks-libev
+git clone https://github.com/shadowsocks/luci-app-shadowsocks.git package/luci-app-shadowsocks
 git clone https://github.com/aa65535/openwrt-simple-obfs.git package/simple-obfs
-
+```
 2. 输入`make menuconfig`，找到  
 >Network ---> shadowsocks-libev  
 Network ---> simple-obfs  
@@ -52,7 +53,7 @@ openwrt-simple-obfs的依赖有 libev、libpthread.
 >加密方式 (必须)  
 >插件名称 (可选)  
 >插件参数 (可选)  
->插件在[进阶]("#进阶")里面讲到  
+>插件在[进阶]("https://github.com/BoringCat/MyLog/blob/master/LEDE/Common_options/ShadowSockOnLEDE.md#进阶")里面讲到  
 >![EditServer](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/SS-EditServer.png)  
 
 接着点击下方的"保存"，暂时在Luci中保存配置。  
@@ -94,7 +95,7 @@ GFWlist用于排除DNS干扰，需配合dnsmasq使用[(Wiki)](https://github.com
 6(tty)、在`/etc/crontabs/root`中添加一行`30    4     *     *     0     /root/gfwlist2dnsmasq.sh -p 5300 -o /etc/dnsmasq.d/gfwlist>/dev/null 2>&1`。若无此文件，则新建该文件并在shell中输入`echo root > /etc/crontabs/cron.update`，最后启动crontab计划任务`/etc/init.d/cron start`  
 
 3. ignore\_list  
-启用了透明代理后默认所有流量都代理到SS服务器，这不仅会加大服务器负担，还会白白浪费流量，减慢访问国内网页的速度。这就需要我们忽略掉对国内IP的代理。。[(Wiki)](https://github.com/shadowsocks/luci-app-shadowsocks/wiki/use-crontab-to-update-the-ignore.list)  
+启用了透明代理后默认所有流量都代理到SS服务器，这不仅会加大服务器负担，还会白白浪费流量，减慢访问国内网页的速度。这就需要我们忽略掉对国内IP的代理。[(Wiki)](https://github.com/shadowsocks/luci-app-shadowsocks/wiki/use-crontab-to-update-the-ignore.list)  
 1、按Wiki内容新建`update_ignore_list`脚本。  
 终端配置计划任务方法：在`/etc/crontabs/root`中添加一行`30    4     *     *     0     /root/update_ignore_list>/dev/null 2>&1`。若无此文件，则新建该文件并在shell中输入`echo root > /etc/crontabs/cron.update`，最后启动crontab计划任务`/etc/init.d/cron start`  
 2、手动更新一次ignore_list.  
