@@ -26,11 +26,12 @@ popd
 第四个输入内容：组播地址(0标准 1锐捷私有 2赛尔)  
 第五个输入内容：DHCP方式(0不使用 1二次认证 2认证后 3认证前)  
 接着按Ctrl+C结束进程，修改配置文件。  
+>  ![MentoHust-loading](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/MentoHust-loading.png)
 >  
 >`/etc/mentohust.conf`  
 >其中：  
->
-Username 是 用户名  
+>  
+>Username 是 用户名  
 Nic 是 网卡名称(可通过`ifconfig`或`ip l`查看)  
 IP 是 验证要用的IP地址(默认填入所选网卡当前IP地址)(DHCP环境可以设为0.0.0.0)  
 Mask 是 子网掩码(默认填入所选网卡当前IP子网掩码)(DHCP环境可以设为0.0.0.0)  
