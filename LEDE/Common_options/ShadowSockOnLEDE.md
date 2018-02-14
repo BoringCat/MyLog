@@ -53,7 +53,7 @@ openwrt-simple-obfs的依赖有 libev、libpthread.
 >加密方式 (必须)  
 >插件名称 (可选)  
 >插件参数 (可选)  
->插件在[进阶]("https://github.com/BoringCat/MyLog/blob/master/LEDE/Common_options/ShadowSockOnLEDE.md#进阶")里面讲到  
+>插件在[进阶](#进阶)里面讲到  
 >![EditServer](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/SS-EditServer.png)  
 
 接着点击下方的"保存"，暂时在Luci中保存配置。  
