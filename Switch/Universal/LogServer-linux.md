@@ -2,7 +2,7 @@
 **环境：Centos 7 已关闭SELinux**  
 **\*交换机模拟环境：GNS3(约3月中旬更新实体环境)**
 
-#### 配置rsyslog
+### #配置rsyslog
 Centos 7最小化安装自带rsyslog。若无，可执行 `yum install rsyslog` 安装  
 1. 备份默认配置文件`cp /etc/rsyslog.conf /etc/rsyslog.conf.bak`
 2. 开启UDP端口监听  
@@ -53,8 +53,8 @@ $template Remote,"/opt/switch/log/%$YEAR%-%$MONTH%/%fromhost-ip%/%$DAY%.log"
 ```
 修改完成后需重启iptables服务
 
-#### 配置交换机
-##### 1. GNS3内路由器 (以Cisco3660为例)
+### #配置交换机
+#### 1. GNS3内路由器 (以Cisco3660为例)
 1. 进入全局配置模式
 2. 输入命令
 ```
@@ -70,9 +70,9 @@ logging 10.0.6.254
 日志本地缓存大小为16K  
 将日志等级为 5(notifications) 以下的日志以接口 f0/0 的 IP 为原 IP 发送到服务器 10.0.6.254 并在开头加上交换机的hostname  
 
-##### 2. 锐捷交换机 (待补充)
+#### 2. 锐捷交换机 (待补充)
 
-#### 验证
+### #验证
 在交换机日志上出现这样一句
 ```
 %SYS-6-LOGGINGHOST_STARTSTOP: Logging to host 10.0.6.254 port 514 started - CLI initiated
