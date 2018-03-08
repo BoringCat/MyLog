@@ -62,22 +62,39 @@ service timestamps log datetime localtime
 logging userinfo
 logging buffered 16384
 logging source-interface f0/0
-logging trap notifications
+logging trap informational
 logging origin-id hostname
 logging 10.0.6.254
 ```
 在日志前加入本地时间，并记录使用特权模式的用户信息  
 日志本地缓存大小为16K  
-将日志等级为 5(notifications) 以下的日志以接口 f0/0 的 IP 为原 IP 发送到服务器 10.0.6.254 并在开头加上交换机的hostname  
+将日志等级为 6(informational) 以下的日志以接口 f0/0 的 IP 为原 IP 发送到服务器 10.0.6.254 并在开头加上交换机的hostname  
 
-#### 2. 锐捷交换机 (待补充)
+#### 2. 锐捷交换机 (非11.X软件平台)  
+1. 进入全局配置模式
+2. 输入命令
+```
+service sequence-numbers
+logging userinfo
+logging userinfo command-log
+logging buffered 32768
+logging source ip 10.0.6.10
+logging trap informational
+logging 10.0.6.254
+```
+在日志前加入本地时间与序号，并记录使用登录的用户信息以及全局配置模式下输入的命令  
+日志本地缓存大小为32K  
+将日志等级为 6(informational) 以下的日志以 10.0.6.10 为原 IP 发送到服务器 10.0.6.254  
+_\*锐捷交换机暂时未发现原IP的作用_
 
 ### #验证
-在交换机日志上出现这样一句
+在Cisco交换机日志上会出现这样一句
 ```
 %SYS-6-LOGGINGHOST_STARTSTOP: Logging to host 10.0.6.254 port 514 started - CLI initiated
 ```
 证明交换机配置成功
+
+锐捷交换机上并未发现类似命令，只能在服务器上确认
 
 在服务器上的`/opt/switch/log`目录里面出现当前年月的文件夹，并且文件夹内有以交换机IP命名的文件夹，里面存在以日期命名文件  
 例如：`/opt/switch/log/2018-02/10.1.1.1/20.log`  
