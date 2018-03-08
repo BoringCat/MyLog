@@ -1,6 +1,7 @@
 ## 启用交换机的日记备份并用 rsyslog 接收
 **环境：Centos 7 已关闭SELinux**  
-**\*交换机模拟环境：GNS3(约3月中旬更新实体环境)**
+**\*交换机模拟环境：GNS3**
+**\*交换机实体环境：Ruijie S2628G/S2628G-E**
 
 ### #配置rsyslog
 Centos 7最小化安装自带rsyslog。若无，可执行 `yum install rsyslog` 安装  
