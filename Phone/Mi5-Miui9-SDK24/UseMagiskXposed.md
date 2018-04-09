@@ -24,7 +24,7 @@
 5. 在模块的详情页下载并安装 Systemless Xposed App(点击模块即可弹出)
 6. 重启系统
 
-| Android版本 | SDK | 
+| Android版本 | SDK |
 | :-: | :-: |
 | Android 8.1 | 27 |
 | Android 8.0 | 26 |
@@ -35,8 +35,10 @@
 | Android 5.0 | 21 |
 
 ### 4、验证  
-1. 在 Magisk 的“模块”中能看到 “Xposed Framework (SDK XX)” 是激活状态的
-2. 打开Xposed Installer可以看到 “Xposed 框架 XX.X (Systemless) 版已激活”
+1. 在 Magisk 的“模块”中能看到 “Xposed Framework (SDK XX)” 是激活状态的  
+![Magisk-Modes](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/Phone/Mi5-Miui9-SDK24/Magisk-Modes.png)
+2. 打开Xposed Installer可以看到 “Xposed 框架 XX.X (Systemless) 版已激活”  
+![Xposed-Installer](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/Phone/Mi5-Miui9-SDK24/Xposed-Installer.png)
 
 ### 额外内容
 + **修复启用Xposed框架后手银行app闪退的问题**  
