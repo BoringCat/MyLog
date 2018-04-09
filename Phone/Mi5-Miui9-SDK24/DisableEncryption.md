@@ -1,6 +1,6 @@
 ## 如何取消Miui9的 /data 分区加密  
-#### 注意：该操作会丢失手机上所有的的数据！是**<a style="color:Red; font-weight:bold;">所有！！！</a>**  
-#### 注意2：该操作会使手机变的极其不安全！  
+#### 注意：该操作会丢失手机上所有的的数据！是<font color=red>所有！！！</font>  
+#### 注意2：该操作会使手机变的及其不安全！  
 ~~*其实贼简单*~~
 
 ### 0、解锁Bootloader
@@ -8,12 +8,8 @@
 在这里：[申请解锁小米手机](http://www.miui.com/unlock/index.html)
 
 ### 1、刷入 TWRP Recovery
-这是写这篇文档时我能找到的最新的 TWRP Recovery（支持简体中文）：
-[TWRP for gemini](https://dl.twrp.me/gemini/)  
-主要更改语言位置：
-1. 在第一次进入Recovery时，会询问是否保持System分区的只读状态。这时候可以选右边的“Select Language”选项，然后拉到最上方选择“Chinese(simplified)”  
-2. 在主界面选择“Settings”然后选上方最后一个地球图标的按钮，接着找到并选择“Chinese(simplified)”，按下下方“Set Language”按钮  
-
+这是写这篇文档时我能找到的最新的 TWRP Recovery：
+[[残芯]小米5  TWRP3.2.1 Recovery 支持安卓8.0 完美解密  2018/4/8更新_小米手机5_MIUI论坛](http://www.miui.com/thread-11992931-1-1.html)  
 使用fastboot命令刷入recovery，Mi5是按住音量键下+电源键进入Fastboot模式  
 ```
 fastboot flash recovery $(recovery.img)
@@ -23,8 +19,7 @@ fastboot boot $(recovery.img)            (这句可以直接引导进recovery)
 ### 2、进行数据备份
 1. (基于MIUI)在手机上启用小米云同步，备份如联系人、短信、照片等数据  
 2. 使用TWRP自带的备份功能备份data分区(不包括/data/media/0, 也就是sdcard) （也可以同时备份其他分区），然后将手机连上电脑，使用MTP拷贝手机上备份和重要的数据。
-3. 我的手机是MI5 128G版，当初为了备份全部数据用了adb+tar+管道+dd的方法来备份整个sdcard \_(:з」∠)\_ ~~(dd主要是用来看速度)~~  
-4. 弄个带供电的OTG，用终端tar备份 /data/media 的 0 文件夹
+3. 我的手机是MI5 128G版，当初为了备份全部数据用了adb+tar+管道+dd的方法来备份整个sdcard \_(:з」∠)\_ ~~(dd主要是用来看速度)~~
 
 ### 3、格式化分区
 **注：其实从TWRP备份开始，你的手机都要在TWRP里面了(๑˙ー˙๑)，所以....... 感受宁静吧**  
