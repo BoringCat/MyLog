@@ -39,9 +39,9 @@ config redirect
 >在 Rother 的 /etc/config/firewall 中加入以下内容
 > ```
 > config redirect
-	option src 'wan'
-	option proto 'all'
-	option dest_ip '192.168.1.100'
+>	option src 'wan'
+>	option proto 'all'
+>	option dest_ip '192.168.1.100'
 > ```
 >重启防火墙后确认 Windows 7 能通过访问 110.65.96.121 来访问 Host1，但是也能通过 110.65.96.217 访问。并不符合预期
 > #### 4. 按照网络上查找到的资料配置端口转发
@@ -70,36 +70,37 @@ config redirect
 >|内部 IP 地址|192.168.1.200|
 >|内部端口| 1-65535 |
 >|启用 NAT 环回| √ |
+>
 >这会在 /etc/config/firewall 中加入以下内容：
 > ```
 > config redirect
-	option target 'DNAT'
-	option src 'wan'
-	option dest 'lan'
-	option dest_ip '192.168.1.100'
-	option name 'DMZ100'
-	option proto 'tcp udp icmp'
-	option src_dip '110.65.96.121'
-	option src_dport '1-65535'
-	option dest_port '1-65535'
+>	option target 'DNAT'
+>	option src 'wan'
+>	option dest 'lan'
+>	option dest_ip '192.168.1.100'
+>	option name 'DMZ100'
+>	option proto 'tcp udp icmp'
+>	option src_dip '110.65.96.121'
+>	option src_dport '1-65535'
+>	option dest_port '1-65535'
 >
 > config redirect
-	option target 'DNAT'
-	option src 'wan'
-	option dest 'lan'
-	option dest_ip '192.168.1.200'
-	option name 'DMZ200'
-	option proto 'tcp udp icmp'
-	option src_dip '110.65.96.217'
-	option src_dport '1-65535'
-	option dest_port '1-65535'
+>	option target 'DNAT'
+>	option src 'wan'
+>	option dest 'lan'
+>	option dest_ip '192.168.1.200'
+>	option name 'DMZ200'
+>	option proto 'tcp udp icmp'
+>	option src_dip '110.65.96.217'
+>	option src_dport '1-65535'
+> 	option dest_port '1-65535'
 > ```
 >重启防火墙后确认 Windows 7 能通过访问 110.65.96.121 来访问 Host1，也能通过 110.65.96.217 访问 Host2。符合预期。  
 >但是无论 Host1 与 Host2 是否离线，在 Windows 7 使用 ping 命令时都能获得回应，且 ttl=64
 > #### 5. 真正的静态静态网络地址转换
 >由于ICMP没有端口这种说法，于是只转发所有端口并不可取。  
-尝试关闭 Rother 的防火墙规则 Allow-Ping 并加上允许转发 ICMP 的规则，但没有生效。
-于是尝试在 Rother 的 network/firewall/forwards 中修改各个端口转发配置
+>尝试关闭 Rother 的防火墙规则 Allow-Ping 并加上允许转发 ICMP 的规则，但没有生效。
+>于是尝试在 Rother 的 network/firewall/forwards 中修改各个端口转发配置
 >
 >|修改项目|值|
 >| :-: | :-: |
@@ -112,12 +113,13 @@ config redirect
 >|共享名| DMZ200 |
 >|外部端口|  |
 >|内部端口|  | |
+>
 >对！都改成空！
 >
 >这会在 /etc/config/firewall 中 name=DMZ100 和 name=DMZ200 的规则中去掉以下内容：
 > ```
-	option src_dport '1-65535'
-	option dest_port '1-65535'
+>	option src_dport '1-65535'
+>	option dest_port '1-65535'
 > ```
 >重启防火墙后确认 Windows 7 能通过访问 110.65.96.121 来访问 Host1，也能通过 110.65.96.217 访问 Host2。  
 执行命令 `ping 110.65.96.121` 与 `ping 110.65.96.217` 得到 ttl=63 的正确值。  
