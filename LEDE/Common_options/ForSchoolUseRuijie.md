@@ -7,7 +7,7 @@ pushd package
 git clone https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git
 popd
 ```
-2. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<m>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
+2. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<M\>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
 
 3. (可与4二选一) 输入`make package/MentoHUST-OpenWrt-ipk/compile V=s`编译mentohust包。若没有错误就可以在"bin/_$Arch_/packages/base"里面找到mentohust的ipk包(嫌麻烦可以直接`find -type f -name "mentohust*.ipk"`)
 
