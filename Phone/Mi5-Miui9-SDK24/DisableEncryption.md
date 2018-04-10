@@ -8,9 +8,12 @@
 在这里：[申请解锁小米手机](http://www.miui.com/unlock/index.html)
 
 ### 1、刷入 TWRP Recovery
-这是写这篇文档时我能找到的最新的 TWRP Recovery：
-[[残芯]小米5  TWRP3.2.1 Recovery 支持安卓8.0 完美解密  2018/4/8更新_小米手机5_MIUI论坛](http://www.miui.com/thread-11992931-1-1.html)  
-使用fastboot命令刷入recovery，Mi5是按住音量键下+电源键进入Fastboot模式  
+这是写这篇文档时我能找到的最新的 TWRP Recovery（支持简体中文）：
+[TWRP for gemini](https://dl.twrp.me/gemini/)  
+主要更改语言位置：  
+1. 在第一次进入Recovery时，会询问是否保持System分区的只读状态。这时候可以选右边的“Select Language”选项，然后拉到最上方选择“Chinese(simplified)”  
+2. 在主界面选择“Settings”，然后选上方最后一个地球图标的按钮，接着找到并选择“Chinese(simplified)”，按下下方“Set Language”按钮  
+
 ```
 fastboot flash recovery $(recovery.img)
 fastboot boot $(recovery.img)            (这句可以直接引导进recovery)
