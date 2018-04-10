@@ -31,7 +31,7 @@ config redirect
 > **Host2:**  
 ![Host2-IpInfo](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/SNAT-Host2-IpInfo.png)  
 > #### 1. 启动虚拟机并更改hostname
-将各虚拟机按照拓扑命名
+>将各虚拟机按照拓扑命名
 > #### 2. 配置DHCP保留地址
 >在 Rother 的 DHCP and DNS / Static Leases 中设置 Host1 和 Host2 的保留地址为 192.168.1.100 和 192.168.1.200  
 ![Rother-DHCP](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/SNAT-Rother-DHCP.png)  
