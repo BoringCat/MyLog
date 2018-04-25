@@ -93,7 +93,7 @@ config redirect
 >	option proto 'tcp udp icmp'
 >	option src_dip '110.65.96.217'
 >	option src_dport '1-65535'
-> 	option dest_port '1-65535'
+>	option dest_port '1-65535'
 > ```
 >重启防火墙后确认 Windows 7 能通过访问 110.65.96.121 来访问 Host1，也能通过 110.65.96.217 访问 Host2。符合预期。  
 >但是无论 Host1 与 Host2 是否离线，在 Windows 7 使用 ping 命令时都能获得回应，且 ttl=64

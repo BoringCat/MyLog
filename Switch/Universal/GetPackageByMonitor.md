@@ -55,5 +55,5 @@ Ruijie#wr
 5.1）在电脑上抓取到ICMP报文后观测其目的IP，若IP正确，则能确保一对一镜像配置成功。  
 \*注：配置一对一镜像或多对一镜像并不会影响监控端口原本的配置。在不需要使用该功能时输入`no monitor session 1 source interface f0/10 both` `no monitor session 1 destination interface f0/20`  即可
 
-#### 3. 远程镜像（待补充）
-**不过可能补充不了实体环境了吧 (设备问题) \_(:3」∠)\_**
+#### 3. 远程镜像
+**好吧锐捷接入层交换机的远程镜像功能都不完整**
