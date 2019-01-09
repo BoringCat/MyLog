@@ -16,6 +16,9 @@ make && sudo make install
 popd
 # 选择要编译的包 LuCI -> 3. Applications --> luci-app-mentohust
 ```
+
+**OpenWRT 18+版本注意！** 解决一堆问题的方法：[Make-problem/Problem.md](https://github.com/BoringCat/MyLog/blob/master/LEDE/Make-problem/Problem.md#openwrt-18061-sdk-%E6%9B%B4%E6%96%B0feed%E6%8A%A5%E9%94%99)
+
 3. 输入 `./scripts/feeds update -a` 更新依赖包， 输入`./scripts/feeds install libpcap` 安装 libpcap 依赖  
 
 4. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<M\>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
