@@ -1,8 +1,9 @@
-### LEDE编译的问题与解决方案
+## LEDE编译的问题与解决方案
 (或可用于OpenWrt)  
 
 **本文的所有问题都是在ArchLinux上编译LEDE时遇到的**  
-+ **停在 ./stage1flex -o stage1scan.c ./scan.l**  
+
+### **停在 ./stage1flex -o stage1scan.c ./scan.l**  
 默认情况下执行 `make V=s` 会出现以下情况
 ```
 ...  
@@ -17,7 +18,9 @@
 cp 200-build-AC_USE_SYSTEM_EXTENSIONS-in-configure.ac.patch $CodePath/tools/flex/patches/
 ```
 
-+ **在编译 e2fsprogs/debugfs 时 create_inode.o 报错**  
+---
+
+### **在编译 e2fsprogs/debugfs 时 create_inode.o 报错**  
 执行 `make V=s` 到 `making all in debugfs` 后报错：
 ```
 ...  
@@ -43,3 +46,57 @@ Google到这是 glibc 升级到 2.27 后导致的
 ``` shell
 cp 005-misc-rename-copy_file_range-to-copy_file_chunk.patch $CodePath/tools/e2fsprogs/patches/
 ```
+
+---
+
+### **OpenWrt 18.06.1 SDK 更新feed报错**  
+执行 `./scripts/feeds update -a` 在 git clone 完成后报错
+``` shell
+Create index file './feeds/base.index' 
+.xargs.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.find.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.xargs.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+Collecting package info: merging.../bin/sh: 行 1:  5424 已完成               cat /home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/info/.files-packageinfo-4916
+      5425                       | awk '{gsub(/\//, "_", $0);print "/home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/info/.packageinfo-" $0}'
+      5426 已放弃               (核心已转储)| xargs cat > /home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/.packageinfo 2> /dev/null
+Collecting package info: done
+.xargs.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.find.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.xargs.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+.sed.bin: loadlocale.c:129: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+Collecting target info: merging.../bin/sh: 行 1:  5576 已完成               cat /home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/info/.files-targetinfo-4916
+      5577                       | awk '{gsub(/\//, "_", $0);print "/home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/info/.targetinfo-" $0}'
+      5578 已放弃               (核心已转储)| xargs cat > /home/boringcat/rother/x86/openwrt-sdk-18.06.1.Linux-x86_64/feeds/base.tmp/.targetinfo 2> /dev/null
+Collecting target info: done
+```
+谷歌到解决这个问题需要设置 `LC_ALL=C` 原因..................找不到.............  
+输入 `export LC_ALL=C` 后再执行 `./scripts/feeds update -a` 一切正常  
+_**PS：建议在新终端内执行，不然你的补全将变得很奇怪 (特别是oh-my-zsh)**_
+
+---
+
+### **OpenWrt 18.06.1 SDK 第一次Make任意包时出错**  
+不管是什么包，第一次make都要先编译工具链 (toolchain)，而编译时又报错：
+``` shell
+env: 'time': No such file or directory
+```
+这是缺少GNU time的原因 [(原文地址)](https://bugs.openwrt.org/index.php?do=details&task_id=1918&status%5B0%5D=&pagenum=2) 安装相应包就好了  
+例如 Archlinux 就是安装 time 包
+
+---
+
+### **OpenWrt 18.06.1 SDK 编译MentoHUST出错**  
+在确认执行 `./scripts/feeds install libpcap` 并且确认输出 Installing package 'libpcap' from base 后，编译MentoHUST报错：
+``` shell
+x86_64-openwrt-linux-musl-gcc: error: /home/boringcat/rother/x86/openwrt-sdk-18.06.1-x86-64_gcc-7.3.0_musl.Linux-x86_64/build_dir/target-x86_64_musl/libpcap-*/ipkg-install/usr/lib/libpcap.a: No such file or directory
+```
+原因是文件目录结构及文件名改变，可能是libpcap的源码更改  
+解决方法(步骤)：  
+1. 找到Makefile文件：package/MentoHUST-OpenWrt-ipk/src
+2. 替换 "ipkg-install/" 为".pkgdir/libpcap/"
+3. 替换 "libpcap.a" 为 "libpcap.so"
