@@ -16,17 +16,16 @@ make && sudo make install
 popd
 # 选择要编译的包 LuCI -> 3. Applications --> luci-app-mentohust
 ```
+3. 输入 `./scripts/feeds update -a` 更新依赖包， 输入`./scripts/feeds install libpcap` 安装 libpcap 依赖  
 
-3. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<M\>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
+4. 输入`make menuconfig`，找到 Network--->Ruijie--->mentohust 将其设定为 '<M\>' 编译为ipk，或 '<\*>' 安装到编译出的固件中
 
-4. (可与4二选一) 输入`make package/MentoHUST-OpenWrt-ipk/compile V=s`编译mentohust包。若没有错误就可以在"bin/_$Arch_/packages/base"里面找到mentohust的ipk包(嫌麻烦可以直接`find -type f -name "mentohust*.ipk"`)
+5. 1. 若是从SDK中编译，输入`make package/MentoHUST-OpenWrt-ipk/compile V=s`编译mentohust包。若没有错误就可以在"bin/_$Arch_/packages/base"里面找到mentohust的ipk包(嫌麻烦可以直接`find bin -type f -name "mentohust*.ipk"`)  
+ **注意：SDK中貌似不能直接输入`make`来编译所有包(隔壁 Kratosmax 翻车了)**
 
-5. (可与3二选一) 输入`make V=s`(或`make -j$(cpu核心数+2)`)编译整个LEDE路由系统。具体固件生成的位置要翻阅一下官方文档(我只搞过x86的，它是直接在bin/x86下面)。即使是是编译固件也会生成ipk包，在 bin/_$Arch_/packages 内
+ 2. 若是从源码中编译， 则可以输入`make V=s`(或`make -j$(cpu核心数+2)`)编译整个LEDE路由系统。具体固件生成的位置要翻阅一下官方文档(我只搞过x86的，它是直接在bin/x86下面)。即使是是编译固件也会生成ipk包，在 bin/_$Arch_/packages 内
 
 6. 安装ipk或安装固件
-
-
-+ MentoHust-ipk的依赖有 libpcap、libgcc、libc (后面两个要是没有就别折腾了，最近重新编译固件吧)
 
 #### 配置（无LUCI）
 + 初始化
@@ -78,7 +77,7 @@ DhcpScript 是 进行DHCP的脚本
 都看到了吧：![luci-app-mentohust-select](https://raw.githubusercontent.com/BoringCat/MyLog/master/Picture/LEDE/Common_options/luci-app-mentohust-select.png)  
 点击一下就可以切换到日志界面了  
 再点一下就可以当成刷新了  
-没有日志的话可能是mentohust的输出阻塞了，回到基本配置那边取消勾选"启用"，"保存并应用"后再回来看看  
+没有日志的话是mentohust的没有清除stdout缓冲区，回到基本配置那边取消勾选"启用"，"保存并应用"后再回来看看 (或者修改mentohust的源码，再每个printf后面加上`fflush(stdout)`)  
 **注意：不要在日志界面点"保存与应用"，我点了以后无限"正在应用更改"。源码中该页面并不会响应这个操作**
 + 开机自启？  
 对！搞了LUCI界面后支持init.d脚本开机自启了！  

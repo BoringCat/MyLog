@@ -20,16 +20,22 @@ LuCI ---> 3. Applications ---> luci-app-shadowsocks
 
 将其设定为 '<m>' 编译为ipk，或 '<\*>' 安装到编译出的固件中。
 
-3. (可与4二选一)  
+4. 若是从SDK中编译，  
 输入`make package/shadowsocks-libev/compile V=s`编译 shadowsocks-libev 与 shadowsocks-libev-server 包。  
 输入`make package/luci-app-shadowsocks/compile V=s`编译luci-app-shadowsocks包。  
 输入`make package/simple-obfs/compile V=s`编译simple-obfs 与 编译simple-obfs-server 包。  
 若没有错误就可以在 "bin/_$Arch_/packages/base" 或 "bin/_$Arch_/packages/package" 里面找到ipk包。
-(不知道为什么我编译ARMV7的路由器时，ipk文件在"bin/packages/_$Arch_"内)
+(不知道为什么我编译ARMV7的路由器时，ipk文件在"bin/packages/_$Arch_"内)  
+懒人福利：
+```
+make package/shadowsocks-libev/compile -j
+make package/luci-app-shadowsocks/compile -j
+make package/simple-obfs/compile -j
+```
 
-4. (可与3二选一) 输入`make V=s`(或`make -j$(cpu核心数+2)`)编译整个LEDE路由系统。具体固件生成的位置要翻阅一下官方文档。即使是是编译固件也会生成ipk包，在 bin/_$Arch_/packages 内。  
+5. 若是从源码中编译，可以输入`make V=s`(或`make -j$(cpu核心数+2)`)编译整个LEDE路由系统。具体固件生成的位置要翻阅一下官方文档。即使是是编译固件也会生成ipk包，在 bin/_$Arch_/packages 内。  
 
-5. 安装ipk或安装固件。  
+6. 安装ipk或安装固件。  
 
 + openwrt-shadowsocks的依赖有 zlib、libev、libcares、libpcre、libpthread、libsodium、libmbedtls，可选依赖有kmod-ipt-ipset(用于udp透明代理)  
 luci-app-shadowsocks的依赖有 iptables.  
